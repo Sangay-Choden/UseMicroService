@@ -9,6 +9,7 @@ import bt.edu.gcit.usermicroservice.entity.Role;
 public class RoleServiceImpl implements RoleService {
  private RoleDAO roleDAO;
  @Autowired
+ //constructor injection
  public RoleServiceImpl(RoleDAO roleDAO) {
  this.roleDAO = roleDAO;
  }

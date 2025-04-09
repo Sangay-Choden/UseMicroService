@@ -1,3 +1,4 @@
+
 package bt.edu.gcit.usermicroservice.dao;
 import bt.edu.gcit.usermicroservice.entity.Role;
 import org.springframework.stereotype.Repository;
