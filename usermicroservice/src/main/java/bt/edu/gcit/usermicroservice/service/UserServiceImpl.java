@@ -34,8 +34,12 @@ private final String uploadDir = "src/main/resources/static/images";
  @Override
  @Transactional
  public User save(User user) {
-   user.setPassword(passwordEncoder.encode(user.getPassword()));
- return userDAO.save(user);
+     String password = user.getPassword();
+     if (!password.startsWith("$2a$") && !password.startsWith("$2b$") && !password.startsWith("$2y$")) {
+         user.setPassword(passwordEncoder.encode(password));
+     }
+ 
+     return userDAO.save(user);
  }
 
 @Override
@@ -125,14 +129,18 @@ existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
  // user.setPhoto(filename);
 // save(user);
 String originalFilename = StringUtils.cleanPath(photo.getOriginalFilename());
+System.out.println(originalFilename);
 String filenameExtension =
 originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 String filenameWithoutExtension = originalFilename.substring(0,
 originalFilename.lastIndexOf("."));
+System.out.println(filenameWithoutExtension);
 String timestamp = String.valueOf(System.currentTimeMillis());
 // Append the timestamp to the filename
+System.out.println(timestamp);
 String filename = filenameWithoutExtension + "_" + timestamp + "." +
 filenameExtension;
+System.out.println(filenameExtension);
 
 Path uploadPath = Paths.get(uploadDir, filename);
 photo.transferTo(uploadPath);
